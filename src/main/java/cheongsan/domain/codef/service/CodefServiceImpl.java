@@ -35,6 +35,9 @@ public class CodefServiceImpl implements CodefService {
     @Value("${codef.client-secret}")
     private String clientSecret;
 
+    @Value("${codef.access-token}")
+    private String codefAccessToken;
+
     // 토큰 캐싱을 위한 필드들
     private String cachedAccessToken;
     private LocalDateTime tokenExpiryTime;
@@ -149,13 +152,13 @@ public class CodefServiceImpl implements CodefService {
     @Override
     public String createConnectedId(ConnectedIdRequestDTO requestDTO) {
         try {
-            String accessToken = getAccessToken();
+//            String accessToken = getAccessToken();
 
             URL url = new URL(CREATE_ACCOUNT_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
-            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            conn.setRequestProperty("Authorization", "Bearer " + codefAccessToken);
             conn.setRequestProperty("Content-Type", "application/json");
 
             // RSA 암호화된 JSON 직접 생성
@@ -244,13 +247,13 @@ public class CodefServiceImpl implements CodefService {
     @Override
     public AccountListResponseDTO getAccountList(String connectedId, String organizationCode) {
         try {
-            String accessToken = getAccessToken();
+//            String accessToken = getAccessToken();
 
             URL url = new URL(ACCOUNT_LIST_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
-            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            conn.setRequestProperty("Authorization", "Bearer " + codefAccessToken);
             conn.setRequestProperty("Content-Type", "application/json");
 
             Map<String, String> requestBody = new HashMap<>();
@@ -310,13 +313,13 @@ public class CodefServiceImpl implements CodefService {
     @Override
     public TransactionListResponseDTO getTransactionListWithDates(String connectedId, String organizationCode, String accountNumber, String startDate, String endDate) {
         try {
-            String accessToken = getAccessToken();
+//            String accessToken = getAccessToken();
 
             URL url = new URL(TRANSACTION_LIST_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
-            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            conn.setRequestProperty("Authorization", "Bearer " + codefAccessToken);
             conn.setRequestProperty("Content-Type", "application/json");
 
             Map<String, String> requestBody = new HashMap<>();
@@ -388,13 +391,13 @@ public class CodefServiceImpl implements CodefService {
     @Override
     public LoanTransactionResponseDTO getLoanTransactionList(String connectedId, String organizationCode, String accountNumber, String startDate, String endDate) {
         try {
-            String accessToken = getAccessToken();
+//            String accessToken = getAccessToken();
 
             URL url = new URL(LOAN_TRANSACTION_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
-            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            conn.setRequestProperty("Authorization", "Bearer " + codefAccessToken);
             conn.setRequestProperty("Content-Type", "application/json");
 
             Map<String, String> requestBody = new HashMap<>();

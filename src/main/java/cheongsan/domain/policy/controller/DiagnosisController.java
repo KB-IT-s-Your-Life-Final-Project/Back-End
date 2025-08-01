@@ -70,5 +70,13 @@ public class DiagnosisController {
         return ResponseEntity.ok(diagnosisDTO);
     }
 
+    @PostMapping("/restart")
+    public ResponseEntity<?> restartDiagnosis() {
+        Long currentUserId = 1L;
+        diagnosisService.deleteDiagnosis(currentUserId);
+
+        return ResponseEntity.ok("삭제 완료");
+    }
+
 
 }

@@ -6,6 +6,7 @@ import cheongsan.domain.policy.dto.UserDiagnosisDTO;
 import cheongsan.domain.policy.entity.Diagnosis;
 import cheongsan.domain.policy.entity.SimpleDiagnosis;
 import cheongsan.domain.policy.mapper.PolicyMapper;
+import cheongsan.domain.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.Map;
 @Slf4j
 public class DiagnosisServiceImpl implements DiagnosisService {
     private final PolicyMapper policyMapper;
+    private final UserMapper userMapper;
 
     /**
      * 진단 응답을 분석해, 유저 상태 판정 및 추천 정책 반환
@@ -109,5 +111,9 @@ public class DiagnosisServiceImpl implements DiagnosisService {
         return simpleDiagnosisDTO;
     }
 
+    public void deleteDiagnosis(Long userId) {
+        // 유저 정책 내용 삭제
+        userMapper.deleteDiagnosisByUserId(userId);
 
+    }
 }

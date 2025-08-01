@@ -55,4 +55,6 @@ public interface UserMapper {
     User findByConnectedId(@Param("connectedId") String connectedId);
 
     List<Long> getAllUserIds();
+
+    void deleteDiagnosisByUserId(@Param("userId") Long userId);
 }

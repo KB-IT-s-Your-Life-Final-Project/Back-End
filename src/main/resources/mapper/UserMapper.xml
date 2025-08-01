@@ -114,4 +114,10 @@
         WHERE connected_id = #{connectedId}
     </select>
 
+    <update id="deleteDiagnosisByUserId" parameterType="Long">
+        UPDATE user
+        SET recommended_program_id = NULL
+        WHERE id = #{userId}
+    </update>
+
 </mapper>

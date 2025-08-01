@@ -12,5 +12,7 @@ public interface DiagnosisService {
 
     DiagnosisDTO getDiagnosis(Long diagnosisId);
 
-    public SimpleDiagnosisDTO getSimpleDiagnosis(Long diagnosisId);
+    SimpleDiagnosisDTO getSimpleDiagnosis(Long diagnosisId);
+
+    void deleteDiagnosis(Long userId);
 }
