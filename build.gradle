@@ -93,13 +93,6 @@ dependencies {
 
     implementation 'org.slf4j:slf4j-api:1.7.36'
 
-    // Spring Data Redis (Spring 4.x와 호환)
-    implementation 'org.springframework.data:spring-data-redis:1.8.23.RELEASE'
-    // Jedis 클라이언트
-    implementation 'redis.clients:jedis:2.10.2'
-    implementation 'io.lettuce:lettuce-core:6.3.1.RELEASE'
-
-
     // 테스트
     testImplementation "org.springframework:spring-test:${springVersion}"
     testCompileOnly "org.projectlombok:lombok:${lombokVersion}"

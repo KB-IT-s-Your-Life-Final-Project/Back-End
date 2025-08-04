@@ -15,10 +15,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -42,10 +38,6 @@ public class RootConfig {
     private String username;
     @Value("${jdbc.password}")
     private String password;
-    @Value("${redis.url}")
-    private String redisUrl;
-    @Value("${redis.password}")
-    private String redisPassword;
 
     @Autowired
     ApplicationContext applicationContext;
@@ -103,38 +95,4 @@ public class RootConfig {
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
-
-    // 1. RedisConnectionFactory(Jedis)
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        JedisConnectionFactory factory = new JedisConnectionFactory();
-        factory.setHostName(redisUrl);      // ← EC2 IP 또는 도메인 (ex: ec2-xx-xx-xx-xx.ap-northeast-2.compute.amazonaws.com)
-        factory.setPort(6379);
-        factory.setPassword(redisPassword);        // requirepass에 지정한 비밀번호
-        factory.afterPropertiesSet();
-        return factory;
-    }
-
-    // 2. RedisTemplate 등록
-    @Bean
-    public RedisTemplate<String, String> redisTemplate() {
-        RedisTemplate<String, String> template = new RedisTemplate<>();
-        template.setConnectionFactory(redisConnectionFactory());
-        // serializer 설정도 필요시 추가 가능
-
-        // 일반적인 key:value의 경우 시리얼라이저
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new StringRedisSerializer());
-
-        // Hash를 사용할 경우 시리얼라이저
-        template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(new StringRedisSerializer());
-
-        // 모든 경우
-        template.setDefaultSerializer(new StringRedisSerializer());
-
-
-        return template;
-    }
-
 }
